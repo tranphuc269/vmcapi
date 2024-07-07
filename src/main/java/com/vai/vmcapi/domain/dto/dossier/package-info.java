@@ -1,0 +1,1 @@
+package com.vai.vmcapi.domain.dto.dossier;
