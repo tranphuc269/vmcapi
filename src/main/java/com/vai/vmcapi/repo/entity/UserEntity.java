@@ -28,7 +28,10 @@ public class UserEntity extends BaseEntityAudit {
     public UserVO toVO() {
         return UserVO
                 .builder()
+                .id(this.getId())
                 .username(this.getUsername())
+                .createdAt(this.getCreatedAt())
+                .updatedAt(this.getUpdatedAt())
                 .build();
     }
 }

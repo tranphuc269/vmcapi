@@ -11,6 +11,7 @@ import com.vai.vmcapi.security.UserPrincipal;
 import com.vai.vmcapi.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class UserServiceImpl implements IUserService {
@@ -23,6 +24,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserVO createUser(CreateUserRequest request) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(request.getUsername());

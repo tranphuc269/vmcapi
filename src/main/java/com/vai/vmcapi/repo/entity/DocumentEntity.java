@@ -22,9 +22,9 @@ public class DocumentEntity extends BaseEntityAudit {
     @ManyToOne
     @JoinColumn(name = "dossier_id")
     private DossierEntity dossier;
-
-    @Column(name = "dossier_id", updatable = false)
-    private Long dossierId;
+//
+//    @Column(name = "dossier_id", updatable = false)
+//    private Long dossierId;
 
     @Column(columnDefinition = "TEXT")
     private String extractionData;
