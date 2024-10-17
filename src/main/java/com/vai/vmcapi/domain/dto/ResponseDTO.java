@@ -1,6 +1,7 @@
 package com.vai.vmcapi.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.vai.vmcapi.domain.dto.branch.BranchDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -22,5 +23,9 @@ public class ResponseDTO<V> {
 
     public static <V> ResponseDTO<V> success(V v) {
         return new ResponseDTO<>(200, "ok", v);
+    }
+
+    public static ResponseDTO ok(Object data) {
+        return new ResponseDTO(200, "ok", data);
     }
 }

@@ -17,5 +17,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "branches")
 @SuperBuilder
 public class BranchEntity extends BaseEntityAudit {
-
+    private String name;
+    private String logo;
 }
