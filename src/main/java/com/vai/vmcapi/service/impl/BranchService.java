@@ -44,10 +44,9 @@ public class BranchService {
                 .orElseThrow(() -> new RuntimeException("Branch not found"));
 
         // Update fields
-        existingEntity = updateEntityFields(existingEntity, branchDTO);
+        updateEntityFields(existingEntity, branchDTO);
 
         // Save and return updated DTO
-        assert existingEntity != null;
         BranchEntity savedEntity = branchRepository.save(existingEntity);
         return convertToDTO(savedEntity);
     }
