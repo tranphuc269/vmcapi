@@ -19,12 +19,6 @@ public class UserEntity extends BaseEntityAudit {
 
     private String password;
 
-    @OneToMany(mappedBy = "userCreated")
-    private List<DossierEntity> dossiers;
-
-    @OneToMany(mappedBy = "userCreated")
-    private List<DocumentEntity> documents;
-
     public UserVO toVO() {
         return UserVO
                 .builder()

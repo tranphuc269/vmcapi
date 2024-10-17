@@ -7,12 +7,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @SpringBootApplication
 public class VmcapiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(VmcapiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(VmcapiApplication.class, args);
+    }
 
 }
