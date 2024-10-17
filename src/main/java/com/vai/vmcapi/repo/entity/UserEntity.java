@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Table(name = "users")
 
-public class UserEntity extends BaseEntityAudit {
+public class UserEntity extends BaseEntity {
     private String username;
 
     private String password;

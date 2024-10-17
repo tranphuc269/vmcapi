@@ -9,8 +9,10 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "car_buying_articles")
 public class CarBuyingArticleEntity extends BaseEntityAudit {
-
-
+    private Integer min;
+    private Integer max;
+    private String title;
+    private String content;
 }
