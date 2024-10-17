@@ -30,7 +30,27 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/v3/api-docs.yaml",
             "/swagger-ui/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "cars",
+            "cars/**",
+            "users",
+            "users/**",
+            "brands",
+            "brands/**",
+            "car-buying-articles",
+            "car-buying-articles/**",
+            "colors",
+            "colors/**",
+            "fuels",
+            "fuels/**",
+            "models",
+            "models/**",
+            "origins",
+            "origins/**",
+            "styles",
+            "styles/**",
+            "users",
+            "users/**",
     };
     private final AuthTokenFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

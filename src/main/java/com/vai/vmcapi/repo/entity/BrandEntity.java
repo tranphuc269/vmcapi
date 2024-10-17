@@ -14,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @Setter
-@Table(name = "branches")
+@Table(name = "brands")
 @SuperBuilder
-public class BranchEntity extends BaseEntityAudit {
+public class BrandEntity extends BaseEntityAudit {
     private String name;
     private String logo;
 }

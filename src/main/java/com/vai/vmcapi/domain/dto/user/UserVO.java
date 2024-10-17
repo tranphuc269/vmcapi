@@ -1,11 +1,15 @@
 package com.vai.vmcapi.domain.dto.user;
 
-import com.vai.vmcapi.domain.dto.BaseVO;
-import lombok.Data;
-import lombok.experimental.SuperBuilder;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+@AllArgsConstructor
 @Data
-@SuperBuilder
-public class UserVO extends BaseVO {
+@Builder
+public class UserVO {
+    private Long id;
     private String username;
+
 }

@@ -24,8 +24,6 @@ public class UserEntity extends BaseEntity {
                 .builder()
                 .id(this.getId())
                 .username(this.getUsername())
-                .createdAt(this.getCreatedAt())
-                .updatedAt(this.getUpdatedAt())
                 .build();
     }
 }
