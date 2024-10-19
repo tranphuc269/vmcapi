@@ -23,13 +23,13 @@ public class CarBuyingArticleService {
         }
         CarBuyingArticleEntity carBuyingArticleEntity = convertToEntity(carBuyingArticleDTO);
         CarBuyingArticleEntity savedEntity = carBuyingArticleRepository.save(carBuyingArticleEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<CarBuyingArticleDTO> getAllCarBuyingArticles() {
         List<CarBuyingArticleEntity> allEntities = carBuyingArticleRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(CarBuyingArticleEntity::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -41,7 +41,7 @@ public class CarBuyingArticleService {
                 .orElseThrow(() -> new RuntimeException("CarBuyingArticle not found"));
         existingEntity = updateEntityFields(existingEntity, carBuyingArticleDTO);
         CarBuyingArticleEntity savedEntity = carBuyingArticleRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteCarBuyingArticle(Long id) {
@@ -55,19 +55,6 @@ public class CarBuyingArticleService {
                 .max(carBuyingArticleDTO.getMax())
                 .title(carBuyingArticleDTO.getTitle())
                 .content(carBuyingArticleDTO.getContent())
-                .build();
-    }
-
-    private CarBuyingArticleDTO convertToDTO(CarBuyingArticleEntity carBuyingArticleEntity) {
-        return CarBuyingArticleDTO
-                .builder()
-                .id(carBuyingArticleEntity.getId())
-                .min(carBuyingArticleEntity.getMin())
-                .max(carBuyingArticleEntity.getMax())
-                .title(carBuyingArticleEntity.getTitle())
-                .content(carBuyingArticleEntity.getContent())
-                .createdAt(carBuyingArticleEntity.getCreatedAt())
-                .updatedAt(carBuyingArticleEntity.getUpdatedAt())
                 .build();
     }
 

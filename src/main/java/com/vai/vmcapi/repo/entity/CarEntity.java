@@ -1,5 +1,6 @@
 package com.vai.vmcapi.repo.entity;
 
+import com.vai.vmcapi.domain.dto.car.CarDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,13 +19,15 @@ public class CarEntity extends BaseEntityAudit {
     private String name;
     private String logo;
 
-    @ManyToOne
-    @JoinColumn(name = "branch_id")
-    private BrandEntity branch;
+    private Long price;
 
-    @JoinColumn(name = "branch_id")
-    @Column(name = "branch_id", insertable = false, updatable = false)
-    private Long branchId;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private BrandEntity brand;
+
+    @JoinColumn(name = "brand_id")
+    @Column(name = "brand_id", insertable = false, updatable = false)
+    private Long brandId;
 
     @ManyToOne
     @JoinColumn(name = "style_id")
@@ -56,4 +59,42 @@ public class CarEntity extends BaseEntityAudit {
     private ColorEntity insideColor;
     @Column(name = "inside_color_id", insertable = false, updatable = false)
     private Long insideColorId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private CityEntity city;
+    @Column(name = "city_id", insertable = false, updatable = false)
+    private Long cityId;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private DistrictEntity district;
+    @Column(name = "district_id", insertable = false, updatable = false)
+    private Long districtId;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id")
+    private WardEntity ward;
+    @Column(name = "ward_id", insertable = false, updatable = false)
+    private Long wardId;
+    private String address;
+
+    public CarDTO toDto() {
+        return CarDTO.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .logo(this.getLogo())
+                .brand(this.getBrand() == null ? null : this.getBrand().toDto())
+                .style(this.getStyle() == null ? null : this.getStyle().toDto())
+                .origin(this.getOrigin() == null ? null : this.getOrigin().toDto())
+                .fuel(this.getFuel() == null ? null : this.getFuel().toDto())
+                .outsideColor(this.getOutsideColor() == null ? null : this.getOutsideColor().toDto())
+                .insideColor(this.getInsideColor() == null ? null : this.getInsideColor().toDto())
+                .city(this.getCity() == null ? null : this.getCity().toDto())
+                .district(this.getDistrict() == null ? null : this.getDistrict().toDto())
+                .ward(this.getWard() == null ? null : this.getWard().toDto())
+                .address(this.getAddress())
+                .build();
+    }
 }

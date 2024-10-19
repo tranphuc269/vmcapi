@@ -20,13 +20,13 @@ public class ColorService {
     public ColorDTO createColor(ColorDTO colorDTO) {
         ColorEntity colorEntity = convertToEntity(colorDTO);
         ColorEntity savedEntity = colorRepository.save(colorEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<ColorDTO> getAllColors() {
         List<ColorEntity> allEntities = colorRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(ColorEntity::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class ColorService {
                 .orElseThrow(() -> new RuntimeException("Color not found"));
         existingEntity = updateEntityFields(existingEntity, colorDTO);
         ColorEntity savedEntity = colorRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteColor(Long id) {
@@ -50,16 +50,6 @@ public class ColorService {
                 .build();
     }
 
-    private ColorDTO convertToDTO(ColorEntity colorEntity) {
-        return ColorDTO
-                .builder()
-                .id(colorEntity.getId())
-                .name(colorEntity.getName())
-                .hex(colorEntity.getHex())
-                .createdAt(colorEntity.getCreatedAt())
-                .updatedAt(colorEntity.getUpdatedAt())
-                .build();
-    }
 
     private ColorEntity updateEntityFields(ColorEntity existingEntity, ColorDTO colorDTO) {
         existingEntity.setName(colorDTO.getName());

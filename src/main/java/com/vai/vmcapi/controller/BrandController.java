@@ -3,7 +3,7 @@ package com.vai.vmcapi.controller;
 import com.vai.vmcapi.domain.dto.ResponseDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.vai.vmcapi.domain.dto.branch.BranchDTO;
+import com.vai.vmcapi.domain.dto.brand.BrandDTO;
 import com.vai.vmcapi.service.impl.BrandService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,25 +22,25 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseDTO<BranchDTO> createBranch(@RequestBody BranchDTO branchDTO) {
-        return ResponseDTO.ok(brandService.createBranch(branchDTO));
+    public ResponseDTO<BrandDTO> createBrand(@RequestBody BrandDTO brandDTO) {
+        return ResponseDTO.success(brandService.createBrand(brandDTO));
     }
 
     @GetMapping
-    public ResponseDTO<List<BranchDTO>> getAllBranches() {
-        return ResponseDTO.ok(brandService.getAllBranches());
+    public ResponseDTO<List<BrandDTO>> getAllBrands() {
+        return ResponseDTO.success(brandService.getAllBrands());
     }
 
     @PutMapping("/{id}")
-    public ResponseDTO<BranchDTO> updateBranch(@PathVariable Long id, @RequestBody BranchDTO branchDTO) {
-        return ResponseDTO.ok(
-                brandService.updateBranch(id, branchDTO)
+    public ResponseDTO<BrandDTO> updateBrand(@PathVariable Long id, @RequestBody BrandDTO brandDTO) {
+        return ResponseDTO.success(
+                brandService.updateBrand(id, brandDTO)
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {
-        brandService.deleteBranch(id);
+    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
+        brandService.deleteBrand(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

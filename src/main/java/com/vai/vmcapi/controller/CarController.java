@@ -1,11 +1,17 @@
 package com.vai.vmcapi.controller;
 
+import com.vai.vmcapi.domain.dto.PageableResponse;
+import com.vai.vmcapi.domain.dto.ResponseDTO;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
+import com.vai.vmcapi.domain.dto.car.QueryCarParams;
+import com.vai.vmcapi.domain.dto.car.UpSertCarRequest;
 import com.vai.vmcapi.service.impl.CarService;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.Query;
 import java.util.List;
 
 @RestController
@@ -19,18 +25,18 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
-        return new ResponseEntity<>(carService.createCar(carDTO), HttpStatus.CREATED);
+    public ResponseDTO<CarDTO> createCar(@RequestBody UpSertCarRequest request) {
+        return ResponseDTO.success(carService.createCar(request));
     }
 
-    @GetMapping
-    public ResponseEntity<List<CarDTO>> getAllCars() {
-        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
+    @PostMapping("/query")
+    public ResponseDTO<PageableResponse<CarDTO>> getAllCars(@RequestBody QueryCarParams params) {
+        return ResponseDTO.success(carService.queryCars(params));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarDTO> updateCar(@PathVariable Long id, @RequestBody CarDTO carDTO) {
-        return new ResponseEntity<>(carService.updateCar(id, carDTO), HttpStatus.OK);
+    public ResponseDTO<CarDTO> updateCar(@PathVariable Long id, @RequestBody UpSertCarRequest request) {
+        return ResponseDTO.success(carService.updateCar(id, request));
     }
 
     @DeleteMapping("/{id}")

@@ -5,7 +5,7 @@ import com.vai.vmcapi.domain.dto.user.CreateUserRequest;
 import com.vai.vmcapi.domain.dto.user.LoginRequest;
 import com.vai.vmcapi.domain.dto.user.UserVO;
 import com.vai.vmcapi.repo.entity.UserEntity;
-import com.vai.vmcapi.repo.jpa.JpaUserRepository;
+import com.vai.vmcapi.repo.jpa.UserRepository;
 import com.vai.vmcapi.service.IUserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +17,9 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    private final JpaUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(JpaUserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements IUserService {
     public UserVO resetPassword(Long id) {
         UserEntity userEntity = userRepository.findById(id).orElse(null);
         if (userEntity != null) {
-            userEntity.setPassword("newPassword"); // You should hash the password before saving
+            userEntity.setPassword("123456aA@"); // You should hash the password before saving
             userEntity = userRepository.save(userEntity);
             return new UserVO(userEntity.getId(), userEntity.getUsername());
         }

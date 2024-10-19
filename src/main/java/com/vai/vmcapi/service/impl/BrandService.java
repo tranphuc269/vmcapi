@@ -1,6 +1,6 @@
 package com.vai.vmcapi.service.impl;
 
-import com.vai.vmcapi.domain.dto.branch.BranchDTO;
+import com.vai.vmcapi.domain.dto.brand.BrandDTO;
 import com.vai.vmcapi.repo.entity.BrandEntity;
 import com.vai.vmcapi.repo.jpa.BrandRepository;
 import org.springframework.stereotype.Service;
@@ -17,70 +17,59 @@ public class BrandService {
         this.brandRepository = brandRepository;
     }
 
-    public BranchDTO createBranch(BranchDTO branchDTO) {
+    public BrandDTO createBrand(BrandDTO brandDTO) {
         // Convert DTO to Entity
-        BrandEntity brandEntity = convertToEntity(branchDTO);
+        BrandEntity brandEntity = convertToEntity(brandDTO);
 
         // Save the entity
         BrandEntity savedEntity = brandRepository.save(brandEntity);
 
         // Convert the saved entity back to DTO and return
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
-    public List<BranchDTO> getAllBranches() {
+    public List<BrandDTO> getAllBrands() {
         // Fetch all entities
         List<BrandEntity> allEntities = brandRepository.findAll();
 
         // Convert all entities to DTOs and return
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(BrandEntity::toDto)
                 .collect(Collectors.toList());
     }
 
-    public BranchDTO updateBranch(Long id, BranchDTO branchDTO) {
+    public BrandDTO updateBrand(Long id, BrandDTO brandDTO) {
         // Fetch entity by id
         BrandEntity existingEntity = brandRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Branch not found"));
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
 
         // Update fields
-        updateEntityFields(existingEntity, branchDTO);
+        updateEntityFields(existingEntity, brandDTO);
 
         // Save and return updated DTO
         BrandEntity savedEntity = brandRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
-    public void deleteBranch(Long id) {
+    public void deleteBrand(Long id) {
         // Delete entity by id
         brandRepository.deleteById(id);
     }
 
-    private BrandEntity convertToEntity(BranchDTO branchDTO) {
+    private BrandEntity convertToEntity(BrandDTO brandDTO) {
         // Implement conversion logic
         return BrandEntity
                 .builder()
-                .name(branchDTO.getName())
-                .logo(branchDTO.getLogo())
+                .name(brandDTO.getName())
+                .logo(brandDTO.getLogo())
                 .build();
     }
 
-    private BranchDTO convertToDTO(BrandEntity brandEntity) {
-        // Implement conversion logic
-        return BranchDTO
-                .builder()
-                .id(brandEntity.getId())
-                .name(brandEntity.getName())
-                .logo(brandEntity.getLogo())
-                .createdAt(brandEntity.getCreatedAt())
-                .updatedAt(brandEntity.getUpdatedAt())
-                .build();
-    }
 
-    private BrandEntity updateEntityFields(BrandEntity existingEntity, BranchDTO branchDTO) {
+    private BrandEntity updateEntityFields(BrandEntity existingEntity, BrandDTO brandDTO) {
         // Implement update logic
-        existingEntity.setName(branchDTO.getName());
-        existingEntity.setLogo(branchDTO.getLogo());
+        existingEntity.setName(brandDTO.getName());
+        existingEntity.setLogo(brandDTO.getLogo());
         return existingEntity;
     }
 }

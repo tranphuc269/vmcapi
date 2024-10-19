@@ -1,7 +1,7 @@
 package com.vai.vmcapi.config.aware;
 
 import com.vai.vmcapi.repo.entity.UserEntity;
-import com.vai.vmcapi.repo.jpa.JpaUserRepository;
+import com.vai.vmcapi.repo.jpa.UserRepository;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.AuditorAware;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AuditorAwareImpl implements AuditorAware<UserEntity> {
 
     @Resource
-    private JpaUserRepository userRepository;
+    private UserRepository userRepository;
 
     @NotNull
     @Override

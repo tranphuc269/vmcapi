@@ -21,17 +21,17 @@ public class ColorController {
 
     @PostMapping
     public ResponseDTO<ColorDTO> createColor(@RequestBody ColorDTO colorDTO) {
-        return ResponseDTO.ok(colorService.createColor(colorDTO));
+        return ResponseDTO.success(colorService.createColor(colorDTO));
     }
 
     @GetMapping
     public ResponseDTO<List<ColorDTO>> getAllColors() {
-        return ResponseDTO.ok(colorService.getAllColors());
+        return ResponseDTO.success(colorService.getAllColors());
     }
 
     @PutMapping("/{id}")
     public ResponseDTO<ColorDTO> updateColor(@PathVariable Long id, @RequestBody ColorDTO colorDTO) {
-        return ResponseDTO.ok(
+        return ResponseDTO.success(
                 colorService.updateColor(id, colorDTO)
         );
     }

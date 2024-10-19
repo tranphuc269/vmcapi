@@ -1,12 +1,19 @@
 package com.vai.vmcapi.domain.dto.color;
 
-import com.vai.vmcapi.domain.dto.BaseVO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.Instant;
+
 @Data
-@SuperBuilder
-public class ColorDTO extends BaseVO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
+@Builder
+public class ColorDTO {
+    private Long id;
+    private Instant createdAt;
+    private Instant updatedAt;
     private String name;
     private String hex;
 }

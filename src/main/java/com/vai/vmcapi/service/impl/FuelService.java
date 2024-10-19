@@ -20,13 +20,13 @@ public class FuelService {
     public FuelDTO createFuel(FuelDTO fuelDTO) {
         FuelEntity fuelEntity = convertToEntity(fuelDTO);
         FuelEntity savedEntity = fuelRepository.save(fuelEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<FuelDTO> getAllFuels() {
         List<FuelEntity> allEntities = fuelRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(FuelEntity::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class FuelService {
                 .orElseThrow(() -> new RuntimeException("Fuel not found"));
         existingEntity = updateEntityFields(existingEntity, fuelDTO);
         FuelEntity savedEntity = fuelRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteFuel(Long id) {
@@ -49,15 +49,6 @@ public class FuelService {
                 .build();
     }
 
-    private FuelDTO convertToDTO(FuelEntity fuelEntity) {
-        return FuelDTO
-                .builder()
-                .id(fuelEntity.getId())
-                .name(fuelEntity.getName())
-                .createdAt(fuelEntity.getCreatedAt())
-                .updatedAt(fuelEntity.getUpdatedAt())
-                .build();
-    }
 
     private FuelEntity updateEntityFields(FuelEntity existingEntity, FuelDTO fuelDTO) {
         existingEntity.setName(fuelDTO.getName());

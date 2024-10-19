@@ -20,22 +20,22 @@ public class ModelService {
     public ModelDTO createModel(ModelDTO modelDTO) {
         ModelEntity modelEntity = convertToEntity(modelDTO);
         ModelEntity savedEntity = modelRepository.save(modelEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<ModelDTO> getAllModels() {
         List<ModelEntity> allEntities = modelRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(ModelEntity::toDto)
                 .collect(Collectors.toList());
     }
 
     public ModelDTO updateModel(Long id, ModelDTO modelDTO) {
         ModelEntity existingEntity = modelRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Model not found"));
-        existingEntity = updateEntityFields(existingEntity, modelDTO);
+        updateEntityFields(existingEntity, modelDTO);
         ModelEntity savedEntity = modelRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteModel(Long id) {
@@ -46,27 +46,14 @@ public class ModelService {
         return ModelEntity
                 .builder()
                 .name(modelDTO.getName())
-                .branchId(modelDTO.getBranchId())
+                .brandId(modelDTO.getBrandId())
                 .logo(modelDTO.getLogo())
                 .build();
     }
 
-    private ModelDTO convertToDTO(ModelEntity modelEntity) {
-        return ModelDTO
-                .builder()
-                .id(modelEntity.getId())
-                .name(modelEntity.getName())
-                .branchId(modelEntity.getBranchId())
-                .logo(modelEntity.getLogo())
-                .createdAt(modelEntity.getCreatedAt())
-                .updatedAt(modelEntity.getUpdatedAt())
-                .build();
-    }
-
-    private ModelEntity updateEntityFields(ModelEntity existingEntity, ModelDTO modelDTO) {
+    private void updateEntityFields(ModelEntity existingEntity, ModelDTO modelDTO) {
         existingEntity.setName(modelDTO.getName());
-        existingEntity.setBranchId(modelDTO.getBranchId());
+        existingEntity.setBrandId(modelDTO.getBrandId());
         existingEntity.setLogo(modelDTO.getLogo());
-        return existingEntity;
     }
 }

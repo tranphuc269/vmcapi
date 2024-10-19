@@ -20,13 +20,13 @@ public class StyleService {
     public StyleDTO createStyle(StyleDTO styleDTO) {
         StyleEntity styleEntity = convertToEntity(styleDTO);
         StyleEntity savedEntity = styleRepository.save(styleEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<StyleDTO> getAllStyles() {
         List<StyleEntity> allEntities = styleRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(StyleEntity::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class StyleService {
                 .orElseThrow(() -> new RuntimeException("Style not found"));
         existingEntity = updateEntityFields(existingEntity, styleDTO);
         StyleEntity savedEntity = styleRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteStyle(Long id) {
@@ -49,15 +49,6 @@ public class StyleService {
                 .build();
     }
 
-    private StyleDTO convertToDTO(StyleEntity styleEntity) {
-        return StyleDTO
-                .builder()
-                .id(styleEntity.getId())
-                .name(styleEntity.getName())
-                .createdAt(styleEntity.getCreatedAt())
-                .updatedAt(styleEntity.getUpdatedAt())
-                .build();
-    }
 
     private StyleEntity updateEntityFields(StyleEntity existingEntity, StyleDTO styleDTO) {
         existingEntity.setName(styleDTO.getName());

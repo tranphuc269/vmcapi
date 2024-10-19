@@ -51,6 +51,7 @@ public class SecurityConfiguration {
             "styles/**",
             "users",
             "users/**",
+            "address/**"
     };
     private final AuthTokenFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

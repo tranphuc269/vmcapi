@@ -46,6 +46,6 @@ public abstract class BaseEntityAudit implements Serializable {
     @LastModifiedBy
     private UserEntity userUpdated;
 
-    @Column(name = "created_by", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_by", insertable = false, updatable = false)
     private Long createdBy;
 }

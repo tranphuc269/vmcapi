@@ -20,13 +20,13 @@ public class OriginService {
     public OriginDTO createOrigin(OriginDTO originDTO) {
         OriginEntity originEntity = convertToEntity(originDTO);
         OriginEntity savedEntity = originRepository.save(originEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public List<OriginDTO> getAllOrigins() {
         List<OriginEntity> allEntities = originRepository.findAll();
         return allEntities.stream()
-                .map(this::convertToDTO)
+                .map(OriginEntity::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class OriginService {
                 .orElseThrow(() -> new RuntimeException("Origin not found"));
         existingEntity = updateEntityFields(existingEntity, originDTO);
         OriginEntity savedEntity = originRepository.save(existingEntity);
-        return convertToDTO(savedEntity);
+        return savedEntity.toDto();
     }
 
     public void deleteOrigin(Long id) {
@@ -46,16 +46,6 @@ public class OriginService {
         return OriginEntity
                 .builder()
                 .name(originDTO.getName())
-                .build();
-    }
-
-    private OriginDTO convertToDTO(OriginEntity originEntity) {
-        return OriginDTO
-                .builder()
-                .id(originEntity.getId())
-                .name(originEntity.getName())
-                .createdAt(originEntity.getCreatedAt())
-                .updatedAt(originEntity.getUpdatedAt())
                 .build();
     }
 

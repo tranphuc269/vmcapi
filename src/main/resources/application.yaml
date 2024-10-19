@@ -24,7 +24,11 @@ spring:
 #    org.springframework: info
 #    org.hibernate: debug
 server:
+  compression:
+    enabled: true
   port: 8080
+  servlet:
+    context-path: /api
 
 app:
   auth:
