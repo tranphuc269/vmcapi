@@ -23,8 +23,8 @@ public class ModelService {
         return savedEntity.toDto();
     }
 
-    public List<ModelDTO> getAllModels() {
-        List<ModelEntity> allEntities = modelRepository.findAll();
+    public List<ModelDTO> getAllModels(Long brandId){
+        List<ModelEntity> allEntities = modelRepository.findAllByBrandId(brandId);
         return allEntities.stream()
                 .map(ModelEntity::toDto)
                 .collect(Collectors.toList());

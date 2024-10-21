@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @Entity
 @Getter
@@ -17,9 +20,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CarEntity extends BaseEntityAudit {
     private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
     private String logo;
+    @Column(columnDefinition = "TEXT")
+    private String images;
 
     private Long price;
+    private Integer manufacturingYear;
+    private String version;
+    private Integer kmDriven;
+    private Integer seatCapacity;
+    private String status;
+
+    @Column(unique = true)
+    private String slug;
+
+
+    private String transmission;
+    private String drivetrain;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
@@ -85,6 +104,16 @@ public class CarEntity extends BaseEntityAudit {
                 .id(this.getId())
                 .name(this.getName())
                 .logo(this.getLogo())
+                .price(this.getPrice())
+                .description(this.getDescription())
+                .manufacturingYear(this.getManufacturingYear())
+                .version(this.getVersion())
+                .kmDriven(this.getKmDriven())
+                .seatCapacity(this.getSeatCapacity())
+                .status(this.getStatus())
+                .transmission(this.getTransmission())
+                .drivetrain(this.getDrivetrain())
+                .slug(this.getSlug())
                 .brand(this.getBrand() == null ? null : this.getBrand().toDto())
                 .style(this.getStyle() == null ? null : this.getStyle().toDto())
                 .origin(this.getOrigin() == null ? null : this.getOrigin().toDto())
@@ -94,6 +123,7 @@ public class CarEntity extends BaseEntityAudit {
                 .city(this.getCity() == null ? null : this.getCity().toDto())
                 .district(this.getDistrict() == null ? null : this.getDistrict().toDto())
                 .ward(this.getWard() == null ? null : this.getWard().toDto())
+                .images(this.getImages() == null ? new ArrayList<>() : List.of(this.getImages().split(",")))
                 .address(this.getAddress())
                 .build();
     }

@@ -29,6 +29,11 @@ public class CarController {
         return ResponseDTO.success(carService.createCar(request));
     }
 
+    @GetMapping("/{slug}")
+    public ResponseDTO<CarDTO> getCarBySlug(@PathVariable String slug) {
+        return ResponseDTO.success(carService.findBySlug(slug));
+    }
+
     @PostMapping("/query")
     public ResponseDTO<PageableResponse<CarDTO>> getAllCars(@RequestBody QueryCarParams params) {
         return ResponseDTO.success(carService.queryCars(params));

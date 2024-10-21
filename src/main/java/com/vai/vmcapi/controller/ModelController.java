@@ -21,17 +21,17 @@ public class ModelController {
 
     @PostMapping
     public ResponseDTO<ModelDTO> createModel(@RequestBody ModelDTO modelDTO) {
-        return ResponseDTO.ok(modelService.createModel(modelDTO));
+        return ResponseDTO.success(modelService.createModel(modelDTO));
     }
 
     @GetMapping
-    public ResponseDTO<List<ModelDTO>> getAllModels() {
-        return ResponseDTO.ok(modelService.getAllModels());
+    public ResponseDTO<List<ModelDTO>> getAllModels(@RequestParam Long brandId) {
+        return ResponseDTO.success(modelService.getAllModels(brandId));
     }
 
     @PutMapping("/{id}")
     public ResponseDTO<ModelDTO> updateModel(@PathVariable Long id, @RequestBody ModelDTO modelDTO) {
-        return ResponseDTO.ok(
+        return ResponseDTO.success(
                 modelService.updateModel(id, modelDTO)
         );
     }

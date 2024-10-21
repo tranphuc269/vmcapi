@@ -10,6 +10,7 @@ import com.vai.vmcapi.domain.dto.style.StyleDTO;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,10 +18,21 @@ import java.time.Instant;
 @Builder
 public class CarDTO {
     private Long id;
+    private Long price;
     private Instant createdAt;
     private Instant updatedAt;
     private String name;
     private String logo;
+    private Integer manufacturingYear;
+    private String version;
+    private Integer kmDriven;
+    private Integer seatCapacity;
+    private String status;
+    private String transmission;
+    private String drivetrain;
+    private List<String> images;
+    private String slug;
+
     private Long brandId;
     private BrandDTO brand;
     private Long styleId;
@@ -43,4 +55,5 @@ public class CarDTO {
     private Long wardId;
     private AddressDTO ward;
     private String address;
+    private String description;
 }

@@ -4,8 +4,10 @@ import com.vai.vmcapi.domain.dto.PageableResponse;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
 import com.vai.vmcapi.domain.dto.car.QueryCarParams;
 import com.vai.vmcapi.domain.dto.car.UpSertCarRequest;
+import com.vai.vmcapi.domain.exception.BusinessException;
 import com.vai.vmcapi.repo.entity.CarEntity;
-import com.vai.vmcapi.repo.jpa.CarRepository;
+import com.vai.vmcapi.repo.jpa.*;
+import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,16 +23,52 @@ import java.util.stream.Collectors;
 @Service
 public class CarService {
 
-    private final CarRepository carRepository;
+    @Resource
+    private CarRepository carRepository;
+    @Resource
+    private ModelRepository modelRepository;
 
-    public CarService(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
+    @Resource
+    private BrandRepository brandRepository;
+
+    @Resource
+    private StyleRepository styleRepository;
+
+    @Resource
+    private OriginRepository originRepository;
+
+    @Resource
+    private FuelRepository fuelRepository;
+
+    @Resource
+    private ColorRepository colorRepository;
+
+    @Resource
+    private CityRepository cityRepository;
+
+    @Resource
+
+    private DistrictRepository districtRepository;
+
+    @Resource
+
+    private WardRepository wardRepository;
+
 
     public CarDTO createCar(UpSertCarRequest carDTO) {
+        carRepository.findBySlug(carDTO.getSlug())
+                .ifPresent(entity -> {
+                    throw new BusinessException("Car with slug " + carDTO.getSlug() + " already exists");
+                });
         CarEntity carEntity = convertToEntity(carDTO);
         CarEntity savedEntity = carRepository.save(carEntity);
         return savedEntity.toDto();
+    }
+
+    public CarDTO findBySlug(String slug) {
+        CarEntity carEntity = carRepository.findBySlug(slug)
+                .orElseThrow(() -> new BusinessException("Car not found"));
+        return carEntity.toDto();
     }
 
     public List<CarDTO> getAllCars() {
@@ -59,7 +97,7 @@ public class CarService {
 
     public CarDTO updateCar(Long id, UpSertCarRequest carDTO) {
         CarEntity existingEntity = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new BusinessException("Car not found"));
         updateEntityFields(existingEntity, carDTO);
         CarEntity savedEntity = carRepository.save(existingEntity);
         return savedEntity.toDto();
@@ -128,22 +166,33 @@ public class CarService {
         return CarEntity
                 .builder()
                 .name(carDTO.getName())
+                .description(carDTO.getDescription())
                 .logo(carDTO.getLogo())
-                .brandId(carDTO.getBrandId())
-                .styleId(carDTO.getStyleId())
-                .originId(carDTO.getOriginId())
-                .fuelId(carDTO.getFuelId())
-                .outsideColorId(carDTO.getOutsideColorId())
-                .insideColorId(carDTO.getInsideColorId())
-                .cityId(carDTO.getCityId())
-                .districtId(carDTO.getDistrictId())
-                .wardId(carDTO.getWardId())
+                .brand(brandRepository.findById(carDTO.getBrandId()).get())
+                .style(styleRepository.findById(carDTO.getStyleId()).get())
+                .origin(originRepository.findById(carDTO.getOriginId()).get())
+                .fuel(fuelRepository.findById(carDTO.getFuelId()).get())
+                .outsideColor(colorRepository.findById(carDTO.getOutsideColorId()).get())
+                .insideColor(colorRepository.findById(carDTO.getInsideColorId()).get())
+                .city(cityRepository.findById(carDTO.getCityId()).get())
+                .district(districtRepository.findById(carDTO.getDistrictId()).get())
+                .ward(wardRepository.findById(carDTO.getWardId()).get())
                 .address(carDTO.getAddress())
+                .price(carDTO.getPrice())
                 .build();
     }
 
     private void updateEntityFields(CarEntity existingEntity, UpSertCarRequest carDTO) {
         existingEntity.setName(carDTO.getName());
+        existingEntity.setDescription(carDTO.getDescription());
+        existingEntity.setManufacturingYear(carDTO.getManufacturingYear());
+        existingEntity.setVersion(carDTO.getVersion());
+        existingEntity.setKmDriven(carDTO.getKmDriven());
+        existingEntity.setSeatCapacity(carDTO.getSeatCapacity());
+        existingEntity.setStatus(carDTO.getStatus());
+        existingEntity.setTransmission(carDTO.getTransmission());
+        existingEntity.setDrivetrain(carDTO.getDrivetrain());
+        existingEntity.setImages(String.join(",", carDTO.getImages()));
         existingEntity.setLogo(carDTO.getLogo());
         existingEntity.setBrandId(carDTO.getBrandId());
         existingEntity.setStyleId(carDTO.getStyleId());
@@ -155,5 +204,7 @@ public class CarService {
         existingEntity.setDistrictId(carDTO.getDistrictId());
         existingEntity.setWardId(carDTO.getWardId());
         existingEntity.setAddress(carDTO.getAddress());
+        existingEntity.setPrice(carDTO.getPrice());
+        existingEntity.setSlug(carDTO.getSlug());
     }
 }
