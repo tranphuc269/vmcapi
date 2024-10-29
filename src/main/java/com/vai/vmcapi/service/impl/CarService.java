@@ -1,15 +1,22 @@
 package com.vai.vmcapi.service.impl;
 
 import com.vai.vmcapi.domain.dto.PageableResponse;
+import com.vai.vmcapi.domain.dto.car.CarBrands;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
 import com.vai.vmcapi.domain.dto.car.QueryCarParams;
 import com.vai.vmcapi.domain.dto.car.UpSertCarRequest;
 import com.vai.vmcapi.domain.exception.BusinessException;
+import com.vai.vmcapi.repo.entity.BrandEntity;
 import com.vai.vmcapi.repo.entity.CarEntity;
+import com.vai.vmcapi.repo.entity.ModelEntity;
 import com.vai.vmcapi.repo.jpa.*;
 import com.vai.vmcapi.utils.RandomStringGenerator;
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Predicate;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +24,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +61,9 @@ public class CarService {
 
     @Resource
     private WardRepository wardRepository;
+
+    @Resource
+    private ResourceLoader resourceLoader;
 
 
     public CarDTO createCar(UpSertCarRequest carDTO) {
@@ -243,5 +254,69 @@ public class CarService {
         existingEntity.setAddress(carDTO.getAddress());
         existingEntity.setPrice(carDTO.getPrice());
         existingEntity.setSlug(carDTO.getSlug());
+    }
+
+//    @PostConstruct
+    public void init() {
+        CarBrands carBrands;
+        try {
+            carBrands = loadCarBrandsFromExcel();
+            System.out.println(carBrands);
+
+            // create brand
+            carBrands.getBrands().forEach((brandName, models) -> {
+                BrandEntity brandEntity = BrandEntity.builder().name(brandName).build();
+                brandRepository.save(brandEntity);
+
+                // create models
+                models.forEach(modelName -> {
+                    ModelEntity modelEntity = ModelEntity
+                            .builder()
+                            .name(Objects.equals(modelName, "Khác") ? modelName : brandName + "-" + modelName)
+                            .brandId(brandEntity.getId())
+                            .build();
+                    modelRepository.save(modelEntity);
+                });
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private CarBrands loadCarBrandsFromExcel() throws IOException {
+        org.springframework.core.io.Resource resource = resourceLoader.getResource("classpath:hangxe.xlsx");
+
+        Map<String, List<String>> brands = new HashMap<>();
+        try (InputStream file = resource.getInputStream();
+             Workbook workbook = new XSSFWorkbook(file)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
+            Row headerRow = sheet.getRow(0); // Dòng đầu tiên chứa tên thương hiệu
+
+            // Duyệt qua các cột để lấy tên thương hiệu
+            for (int col = 0; col < headerRow.getPhysicalNumberOfCells(); col++) {
+                Cell brandCell = headerRow.getCell(col);
+                if (brandCell != null) {
+                    String brand = brandCell.getStringCellValue();
+                    List<String> models = new ArrayList<>();
+
+                    // Duyệt qua các dòng để lấy các mẫu xe của từng thương hiệu
+                    for (int row = 1; row <= sheet.getLastRowNum(); row++) {
+                        Row modelRow = sheet.getRow(row);
+                        Cell modelCell = modelRow.getCell(col);
+                        if (modelCell != null && modelCell.getCellType() == CellType.STRING) {
+                            String model = modelCell.getStringCellValue();
+                            if (!model.isEmpty()) {
+                                models.add(model);
+                            }
+                        }
+                    }
+                    brands.put(brand, models);
+                }
+
+            }
+        }
+
+        return new CarBrands(brands);
     }
 }
