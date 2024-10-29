@@ -1,6 +1,7 @@
 package com.vai.vmcapi.repo.entity;
 
 import com.vai.vmcapi.domain.dto.car.CarDTO;
+import com.vai.vmcapi.utils.NumberToVietnameseWords;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.List;
 @SuperBuilder
 public class CarEntity extends BaseEntityAudit {
     private String name;
+    private String code;
     @Column(columnDefinition = "TEXT")
     private String description;
     private String logo;
@@ -105,6 +107,8 @@ public class CarEntity extends BaseEntityAudit {
                 .name(this.getName())
                 .logo(this.getLogo())
                 .price(this.getPrice())
+                .priceText(NumberToVietnameseWords.convertToVietnameseWords(this.getPrice()))
+                .code(this.getCode())
                 .description(this.getDescription())
                 .manufacturingYear(this.getManufacturingYear())
                 .version(this.getVersion())
@@ -120,8 +124,8 @@ public class CarEntity extends BaseEntityAudit {
                 .fuel(this.getFuel() == null ? null : this.getFuel().toDto())
                 .outsideColor(this.getOutsideColor() == null ? null : this.getOutsideColor().toDto())
                 .insideColor(this.getInsideColor() == null ? null : this.getInsideColor().toDto())
-                .city(this.getCity() == null ? null : this.getCity().toDto())
-                .district(this.getDistrict() == null ? null : this.getDistrict().toDto())
+//                .city(this.getCity() == null ? null : this.getCity().toDto())
+//                .district(this.getDistrict() == null ? null : this.getDistrict().toDto())
                 .ward(this.getWard() == null ? null : this.getWard().toDto())
                 .images(this.getImages() == null ? new ArrayList<>() : List.of(this.getImages().split(",")))
                 .address(this.getAddress())

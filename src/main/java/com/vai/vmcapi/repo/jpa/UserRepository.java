@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     Optional<UserEntity> findByUsername(String username);
+
+    Optional<UserEntity> findByUsernameOrPhoneNum(String username, String phoneNum);
 }

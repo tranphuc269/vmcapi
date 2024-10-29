@@ -31,11 +31,11 @@ server:
     context-path: /api
 
 app:
-  auth:
-    jwtSecret: abcyxz
-    jwtExpirationMs: 5400000
   s3:
     url: http://localhost:9000
     bucket: vmc
     accessKey: admin
     secretKey: admin
+  security:
+    jwtSecret: vyfmojpjkagyulhyjhcutvibxvhhknadrscrpjpxjgeqyfxcuhirkczgsqxigeda
+    jwtExpirationInMs: 5400000

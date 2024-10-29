@@ -7,6 +7,7 @@ import com.vai.vmcapi.domain.dto.car.UpSertCarRequest;
 import com.vai.vmcapi.domain.exception.BusinessException;
 import com.vai.vmcapi.repo.entity.CarEntity;
 import com.vai.vmcapi.repo.jpa.*;
+import com.vai.vmcapi.utils.RandomStringGenerator;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
@@ -51,7 +52,6 @@ public class CarService {
     private DistrictRepository districtRepository;
 
     @Resource
-
     private WardRepository wardRepository;
 
 
@@ -153,7 +153,35 @@ public class CarService {
             if (params.getMaxPrice() != null) {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), params.getMaxPrice()));
             }
+            if (params.getManufacturingYear() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("manufacturingYear"), params.getManufacturingYear()));
+            }
+            if (params.getVersion() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("version"), params.getVersion()));
+            }
+            if (params.getKmDriven() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("kmDriven"), params.getKmDriven()));
+            }
+            if (params.getSeatCapacity() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("seatCapacity"), params.getSeatCapacity()));
+            }
+            if (params.getStatus() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), params.getStatus()));
+            }
+            if (params.getTransmission() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("transmission"), params.getTransmission()));
+            }
+            if (params.getDrivetrain() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("drivetrain"), params.getDrivetrain()));
+            }
 
+            if (params.getKeyword() != null && !params.getKeyword().isEmpty()) {
+                String keyword = "%" + params.getKeyword().toLowerCase() + "%";
+                Predicate namePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), keyword);
+                Predicate descriptionPredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), keyword);
+                Predicate codePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("code")), keyword);
+                predicates.add(criteriaBuilder.or(namePredicate, descriptionPredicate, codePredicate));
+            }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
@@ -166,8 +194,12 @@ public class CarService {
         return CarEntity
                 .builder()
                 .name(carDTO.getName())
+                .code(RandomStringGenerator.generateUniqueString())
                 .description(carDTO.getDescription())
                 .logo(carDTO.getLogo())
+                .images(String.join(",", carDTO.getImages()))
+                .version(carDTO.getVersion())
+                .kmDriven(carDTO.getKmDriven())
                 .brand(brandRepository.findById(carDTO.getBrandId()).get())
                 .style(styleRepository.findById(carDTO.getStyleId()).get())
                 .origin(originRepository.findById(carDTO.getOriginId()).get())
@@ -179,6 +211,11 @@ public class CarService {
                 .ward(wardRepository.findById(carDTO.getWardId()).get())
                 .address(carDTO.getAddress())
                 .price(carDTO.getPrice())
+                .slug(carDTO.getSlug())
+                .manufacturingYear(carDTO.getManufacturingYear())
+                .seatCapacity(carDTO.getSeatCapacity())
+                .status(carDTO.getStatus())
+                .transmission(carDTO.getTransmission())
                 .build();
     }
 

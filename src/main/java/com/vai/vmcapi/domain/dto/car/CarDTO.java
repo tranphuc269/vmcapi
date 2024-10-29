@@ -19,6 +19,7 @@ import java.util.List;
 public class CarDTO {
     private Long id;
     private Long price;
+    private String priceText;
     private Instant createdAt;
     private Instant updatedAt;
     private String name;
@@ -32,6 +33,7 @@ public class CarDTO {
     private String drivetrain;
     private List<String> images;
     private String slug;
+    private String code;
 
     private Long brandId;
     private BrandDTO brand;
@@ -56,4 +58,9 @@ public class CarDTO {
     private AddressDTO ward;
     private String address;
     private String description;
+
+    @Builder.Default
+    private String userPhoneNum = "0123456789";
+    @Builder.Default
+    private String username = "Không xác định";
 }

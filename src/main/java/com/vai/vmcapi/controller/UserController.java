@@ -5,6 +5,8 @@ import com.vai.vmcapi.domain.dto.user.AuthResponse;
 import com.vai.vmcapi.domain.dto.user.CreateUserRequest;
 import com.vai.vmcapi.domain.dto.user.LoginRequest;
 import com.vai.vmcapi.domain.dto.user.UserVO;
+import com.vai.vmcapi.security.CurrentUser;
+import com.vai.vmcapi.security.UserContext;
 import com.vai.vmcapi.service.IUserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -16,17 +18,24 @@ public class UserController {
 
     @Resource
     private IUserService userService;
-    @PostMapping
-    public ResponseDTO<UserVO> createUser(@RequestBody @Valid CreateUserRequest request){
+
+    @PostMapping("/register")
+    public ResponseDTO<UserVO> createUser(@RequestBody @Valid CreateUserRequest request) {
         return ResponseDTO.success(userService.createUser(request));
     }
 
     @PostMapping("/auth")
-    public ResponseDTO<AuthResponse> login(@RequestBody @Valid LoginRequest request){
+    public ResponseDTO<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
         return ResponseDTO.success(userService.login(request));
     }
+
     @PutMapping("/{id}/reset-password")
-    public ResponseDTO<UserVO> resetPassword(@PathVariable Long id){
+    public ResponseDTO<UserVO> resetPassword(@PathVariable Long id) {
         return ResponseDTO.success(userService.resetPassword(id));
+    }
+
+    @GetMapping("/me")
+    public ResponseDTO<UserVO> me(@CurrentUser UserContext userContext) {
+        return ResponseDTO.success(userService.me(userContext));
     }
 }

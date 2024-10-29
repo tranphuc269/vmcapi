@@ -46,6 +46,7 @@ public class UpSertCarRequest {
     private Long price;
     private String logo;
     private Long brandId;
+    private Long modelId;
     private Long styleId;
     private Long originId;
     private Long fuelId;

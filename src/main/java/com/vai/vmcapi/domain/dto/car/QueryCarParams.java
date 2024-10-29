@@ -21,6 +21,17 @@ public class QueryCarParams {
     private Long maxPrice;
     private List<SortItem> sortItems;
 
+    private String keyword;
+
+    private Integer manufacturingYear;
+    private String version;
+    private Integer kmDriven;
+    private Integer seatCapacity;
+    private String status;
+
+    private String transmission;
+    private String drivetrain;
+
     @Data
     public static class SortItem {
         private String field;

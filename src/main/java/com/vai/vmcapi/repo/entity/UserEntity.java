@@ -19,11 +19,25 @@ public class UserEntity extends BaseEntity {
 
     private String password;
 
+    private String phoneNum;
+
+    private String fullname;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id")
+    private WardEntity ward;
+    @Column(name = "ward_id", insertable = false, updatable = false)
+    private Long wardId;
+
+
     public UserVO toVO() {
         return UserVO
                 .builder()
                 .id(this.getId())
                 .username(this.getUsername())
+                .phoneNum(this.getPhoneNum())
+                .fullname(this.getFullname())
+                .ward(this.getWard().toDto())
                 .build();
     }
 }
