@@ -3,7 +3,7 @@ package com.vai.vmcapi.config.aware;
 import com.vai.vmcapi.repo.entity.UserEntity;
 import com.vai.vmcapi.repo.jpa.UserRepository;
 import jakarta.annotation.Resource;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
