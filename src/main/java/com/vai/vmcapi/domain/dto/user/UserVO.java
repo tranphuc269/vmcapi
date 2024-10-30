@@ -16,6 +16,7 @@ public class UserVO {
     private String username;
     private String phoneNum;
     private String fullname;
+    private String role;
     private AddressDTO ward;
 
 }

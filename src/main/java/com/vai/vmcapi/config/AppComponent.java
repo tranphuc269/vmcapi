@@ -1,12 +1,12 @@
 package com.vai.vmcapi.config;
 
-import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import java.net.MalformedURLException;
-import java.net.URI;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
 @Component
 public class AppComponent {
@@ -14,15 +14,16 @@ public class AppComponent {
     private String accessKey;
     @Value("${app.s3.secretKey}")
     private String secretKey;
-    @Value("${app.s3.url}")
-    private String minioUrl;
 
     @Bean
-    public MinioClient minioClient() throws MalformedURLException {
-        return MinioClient
+    public S3Client amazonS3() {
+        return S3Client
                 .builder()
-                .endpoint(URI.create(minioUrl).toURL())
-                .credentials(accessKey, secretKey)
+                .region(Region.US_EAST_1)
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)
+                        )
+                )
                 .build();
     }
 }

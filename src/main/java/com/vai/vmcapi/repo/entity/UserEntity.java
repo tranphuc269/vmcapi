@@ -22,6 +22,7 @@ public class UserEntity extends BaseEntity {
     private String phoneNum;
 
     private String fullname;
+    private String role;
 
     @ManyToOne
     @JoinColumn(name = "ward_id")
@@ -38,6 +39,7 @@ public class UserEntity extends BaseEntity {
                 .phoneNum(this.getPhoneNum())
                 .fullname(this.getFullname())
                 .ward(this.getWard().toDto())
+                .role(this.getRole())
                 .build();
     }
 }

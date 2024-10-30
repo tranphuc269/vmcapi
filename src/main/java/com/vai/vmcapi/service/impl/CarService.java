@@ -10,6 +10,7 @@ import com.vai.vmcapi.repo.entity.BrandEntity;
 import com.vai.vmcapi.repo.entity.CarEntity;
 import com.vai.vmcapi.repo.entity.ModelEntity;
 import com.vai.vmcapi.repo.jpa.*;
+import com.vai.vmcapi.security.UserContext;
 import com.vai.vmcapi.utils.RandomStringGenerator;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -66,7 +67,7 @@ public class CarService {
     private ResourceLoader resourceLoader;
 
 
-    public CarDTO createCar(UpSertCarRequest carDTO) {
+    public CarDTO createCar(UserContext userContext, UpSertCarRequest carDTO) {
         carRepository.findBySlug(carDTO.getSlug())
                 .ifPresent(entity -> {
                     throw new BusinessException("Car with slug " + carDTO.getSlug() + " already exists");
@@ -256,8 +257,12 @@ public class CarService {
         existingEntity.setSlug(carDTO.getSlug());
     }
 
-//    @PostConstruct
+    @PostConstruct
     public void init() {
+        List<BrandEntity> brandEntities = brandRepository.findAll();
+        if (!brandEntities.isEmpty()) {
+            return;
+        }
         CarBrands carBrands;
         try {
             carBrands = loadCarBrandsFromExcel();

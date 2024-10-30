@@ -5,6 +5,8 @@ import com.vai.vmcapi.domain.dto.ResponseDTO;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
 import com.vai.vmcapi.domain.dto.car.QueryCarParams;
 import com.vai.vmcapi.domain.dto.car.UpSertCarRequest;
+import com.vai.vmcapi.security.CurrentUser;
+import com.vai.vmcapi.security.UserContext;
 import com.vai.vmcapi.service.impl.CarService;
 import org.springframework.http.HttpStatus;
 
@@ -25,8 +27,8 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseDTO<CarDTO> createCar(@RequestBody UpSertCarRequest request) {
-        return ResponseDTO.success(carService.createCar(request));
+    public ResponseDTO<CarDTO> createCar(@CurrentUser UserContext userContext, @RequestBody UpSertCarRequest request) {
+        return ResponseDTO.success(carService.createCar(userContext, request));
     }
 
     @GetMapping("/{slug}")

@@ -107,7 +107,7 @@ public class CarEntity extends BaseEntityAudit {
                 .name(this.getName())
                 .logo(this.getLogo())
                 .price(this.getPrice())
-                .priceText(NumberToVietnameseWords.convertToVietnameseWords(this.getPrice()))
+                .priceText(NumberToVietnameseWords.convertToVietnameseWords(this.getPrice() == null ? 0 : this.getPrice()))
                 .code(this.getCode())
                 .description(this.getDescription())
                 .manufacturingYear(this.getManufacturingYear())
@@ -129,6 +129,8 @@ public class CarEntity extends BaseEntityAudit {
                 .ward(this.getWard() == null ? null : this.getWard().toDto())
                 .images(this.getImages() == null ? new ArrayList<>() : List.of(this.getImages().split(",")))
                 .address(this.getAddress())
+                .username(this.getCreatedBy() == null ? null : this.getUserCreated().getFullname())
+                .userPhoneNum(this.getCreatedBy() == null ? null : this.getUserCreated().getPhoneNum())
                 .build();
     }
 }
