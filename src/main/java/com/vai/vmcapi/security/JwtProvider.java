@@ -1,7 +1,6 @@
 package com.vai.vmcapi.security;
 
 
-import com.vai.vmcapi.domain.exception.BusinessException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.io.Decoders;
@@ -68,31 +67,32 @@ public class JwtProvider {
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
+            return false;
 //            return false;
-            throw new BusinessException("Invalid JWT signature");
+//            throw new BusinessException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
             log.error("Invalid JWT token");
 //            return false;
-
-            throw new BusinessException("Invalid JWT token");
+            return false;
+//            throw new BusinessException("Invalid JWT token");
 
         } catch (ExpiredJwtException ex) {
             log.error("Expired JWT token");
-//            return false;
+            return false;
 
-            throw new BusinessException("Expired JWT token");
+//            throw new BusinessException("Expired JWT token");
 
         } catch (UnsupportedJwtException ex) {
             log.error("Unsupported JWT token");
-//            return false;
+            return false;
 
-            throw new BusinessException("Unsupported JWT token");
+//            throw new BusinessException("Unsupported JWT token");
 
         } catch (IllegalArgumentException ex) {
             log.error("JWT claims string is empty.");
-//            return false;
+            return false;
 
-            throw new BusinessException("JWT claims string is empty.");
+//            throw new BusinessException("JWT claims string is empty.");
 
         }
     }
