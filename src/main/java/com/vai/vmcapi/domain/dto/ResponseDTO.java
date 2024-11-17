@@ -27,4 +27,8 @@ public class ResponseDTO<V> {
     public static ResponseDTO ok(Object data) {
         return new ResponseDTO(200, "ok", data);
     }
+
+    public static Object errMsg(int value, String message) {
+        return new ResponseDTO(value, message);
+    }
 }

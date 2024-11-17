@@ -2,7 +2,7 @@ package com.vai.vmcapi.enums;
 
 public enum ETransmission {
     AUTOMATIC("Automatic"),
-    HYBIRD("Hybird"),
+    HYBRID("Hybird"),
     OTHER("Other"),
     MANUAL("Manual");
 

@@ -1,6 +1,8 @@
 package com.vai.vmcapi.security;
 
 
+import com.google.gson.GsonBuilder;
+import com.vai.vmcapi.domain.dto.ResponseDTO;
 import com.vai.vmcapi.domain.exception.BusinessException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -80,8 +82,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         resp.setStatus(businessException.getCode());
         resp.setContentType("application/json;charset=UTF-8");
         resp.setStatus(businessException.getCode());
-//        resp.getWriter().write(IDPStringUtil.parseObjectToString(ResponseDTO.errMsg(businessException.getHttpStatus().value(),
-//                businessException.getMessage())));
+
+        resp.getWriter().write(new GsonBuilder().setPrettyPrinting().create().toJson(ResponseDTO.errMsg(businessException.getHttpStatus().value(),
+                businessException.getMessage())));
     }
 
     private void handleException(HttpServletResponse resp) throws IOException {

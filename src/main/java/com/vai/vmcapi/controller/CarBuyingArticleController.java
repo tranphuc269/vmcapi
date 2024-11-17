@@ -1,7 +1,9 @@
 package com.vai.vmcapi.controller;
 
+import com.vai.vmcapi.domain.dto.PageableResponse;
 import com.vai.vmcapi.domain.dto.ResponseDTO;
 import com.vai.vmcapi.domain.dto.article.CarBuyingArticleDTO;
+import com.vai.vmcapi.domain.dto.car_article.QueryCarArticleParams;
 import com.vai.vmcapi.service.impl.CarBuyingArticleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,11 @@ public class CarBuyingArticleController {
     @GetMapping
     public ResponseDTO<List<CarBuyingArticleDTO>> getAllCarBuyingArticles() {
         return ResponseDTO.ok(carBuyingArticleService.getAllCarBuyingArticles());
+    }
+
+    @PostMapping("/query")
+    public ResponseDTO<PageableResponse<CarBuyingArticleDTO>> getAllCars(@RequestBody QueryCarArticleParams params) {
+        return ResponseDTO.success(carBuyingArticleService.queryArticle(params));
     }
 
     @PutMapping("/{id}")

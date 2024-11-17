@@ -2,6 +2,7 @@ package com.vai.vmcapi.config.aware;
 
 import com.vai.vmcapi.repo.entity.UserEntity;
 import com.vai.vmcapi.repo.jpa.UserRepository;
+import com.vai.vmcapi.security.UserContext;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.AuditorAware;
@@ -24,7 +25,7 @@ public class AuditorAwareImpl implements AuditorAware<UserEntity> {
         if (authentication == null){
             return Optional.empty();
         }
-        String username = authentication.getName();
-        return userRepository.findByUsername(username);
+        Long id = ((UserContext) authentication.getPrincipal()).getId();
+        return userRepository.findById(id);
     }
 }

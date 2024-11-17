@@ -1,8 +1,10 @@
 package com.vai.vmcapi.domain.dto.article;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import com.vai.vmcapi.domain.dto.user.UserVO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.Instant;
 
@@ -18,4 +20,6 @@ public class CarBuyingArticleDTO {
     private Integer max;
     private String title;
     private String content;
+    private String code;
+    private UserVO user;
 }
