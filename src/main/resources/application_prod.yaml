@@ -32,8 +32,8 @@ server:
 
 app:
   s3:
-    accessKey:
-    secretKey:
+    accessKey: "test"
+    secretKey: "test"
   security:
     jwtSecret: vyfmojpjkagyulhyjhcutvibxvhhknadrscrpjpxjgeqyfxcuhirkczgsqxigeda
     jwtExpirationInMs: 5400000
