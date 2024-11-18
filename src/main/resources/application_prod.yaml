@@ -5,9 +5,9 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://18.140.157.75:5432/test
+    url: jdbc:postgresql://localhost:5432/car
     username: admin
-    password: admin
+    password: phuctv142024
   jpa:
     hibernate:
       ddl-auto: update
@@ -32,8 +32,8 @@ server:
 
 app:
   s3:
-    accessKey: ""
-    secretKey: ""
+    accessKey: AKIA3FLD37MOECUTY6EK
+    secretKey: 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
   security:
     jwtSecret: vyfmojpjkagyulhyjhcutvibxvhhknadrscrpjpxjgeqyfxcuhirkczgsqxigeda
     jwtExpirationInMs: 5400000
