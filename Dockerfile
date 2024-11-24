@@ -12,7 +12,7 @@ COPY src ./src
 RUN apt-get update && apt-get install -y maven
 
 # Build the application
-RUN mvn clean package -DskipTests
+RUN mvn clean install
 
 # Copy the built JAR file to the working directory
 COPY target/vmcapi-0.0.1-SNAPSHOT.jar app.jar
