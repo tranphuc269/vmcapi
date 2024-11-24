@@ -8,6 +8,6 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-        - SQL_URL=jdbc:postgresql://0.0.0.0:5432/car
+        - SQL_URL=jdbc:postgresql://my_postgres:5432/car
     ports:
       - "8080:8080"
