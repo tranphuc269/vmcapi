@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
     networks:
-        - host
+        - docker0
     environment:
         - SQL_URL=jdbc:postgresql://localhost:5432/car
     ports:
