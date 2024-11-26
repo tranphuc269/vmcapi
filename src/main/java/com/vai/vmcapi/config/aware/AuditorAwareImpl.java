@@ -21,11 +21,15 @@ public class AuditorAwareImpl implements AuditorAware<UserEntity> {
     @NotNull
     @Override
     public Optional<UserEntity> getCurrentAuditor() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null){
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null) {
+                return Optional.empty();
+            }
+            Long id = ((UserContext) authentication.getPrincipal()).getId();
+            return userRepository.findById(id);
+        } catch (Exception e) {
             return Optional.empty();
         }
-        Long id = ((UserContext) authentication.getPrincipal()).getId();
-        return userRepository.findById(id);
     }
 }
