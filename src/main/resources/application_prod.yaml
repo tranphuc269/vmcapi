@@ -27,8 +27,8 @@ server:
   compression:
     enabled: true
   port: 8080
-  servlet:
-    context-path: /api
+#  servlet:
+#    context-path: /api
 
 app:
   s3:
