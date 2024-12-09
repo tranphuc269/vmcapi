@@ -11,3 +11,12 @@ services:
         - SQL_URL=jdbc:postgresql://my_postgres:5432/car
     ports:
       - "8080:8080"
+  postgres:
+    container_name: my_postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: phuctv142024
+      POSTGRES_DB: car
+    ports:
+      - "5432:5432"
