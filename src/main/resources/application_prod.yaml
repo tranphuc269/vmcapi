@@ -29,11 +29,3 @@ server:
   port: 8080
 #  servlet:
 #    context-path: /api
-
-app:
-  s3:
-    accessKey: AKIA3FLD37MOECUTY6EK
-    secretKey: 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
-  security:
-    jwtSecret: vyfmojpjkagyulhyjhcutvibxvhhknadrscrpjpxjgeqyfxcuhirkczgsqxigeda
-    jwtExpirationInMs: 5400000
