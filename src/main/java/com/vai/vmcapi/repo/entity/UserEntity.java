@@ -3,11 +3,7 @@ package com.vai.vmcapi.repo.entity;
 import com.vai.vmcapi.domain.dto.user.UserVO;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -38,7 +34,7 @@ public class UserEntity extends BaseEntity {
                 .username(this.getUsername())
                 .phoneNum(this.getPhoneNum())
                 .fullname(this.getFullname())
-                .ward(this.getWard().toDto())
+                .ward(this.getWard() == null ? null : this.getWard().toDto())
                 .role(this.getRole())
                 .build();
     }

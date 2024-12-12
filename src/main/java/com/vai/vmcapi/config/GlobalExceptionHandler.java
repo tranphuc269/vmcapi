@@ -5,7 +5,6 @@ import com.vai.vmcapi.domain.dto.ResponseDTO;
 import com.vai.vmcapi.domain.exception.BusinessException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.mapping.PropertyReferenceException;
@@ -82,7 +81,8 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ResponseDTO(ex.getCode(),
                 ex.getMessage()),
-                ex.getHttpStatus());
+                ex.getHttpStatus()
+        );
     }
 
     @ExceptionHandler(value = {HttpMessageNotReadableException.class,

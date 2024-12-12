@@ -37,15 +37,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserVO createUser(CreateUserRequest request) {
-        userRepository.findByUsernameOrPhoneNum(request.getUsername(), request.getPhoneNum()).ifPresent(userEntity -> {
-            throw new BusinessException("Username or phone number already exists");
-        });
+        UserEntity userEntityHasExist = userRepository.findByUsername(request.getUsername()).orElse(null);
+        if (userEntityHasExist != null) {
+            throw new BusinessException("Username already exists");
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(request.getUsername());
         userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
         userEntity.setPhoneNum(request.getPhoneNum());
         userEntity.setFullname(request.getFullname());
-        userEntity.setWard(wardRepository.findById(request.getWardId()).orElse(null));
+        userEntity.setWardId(request.getWardId());
+        userEntity.setWard(wardRepository.findById(request.getWardId()).get());
 
         userEntity = userRepository.save(userEntity);
         return userEntity.toVO();
