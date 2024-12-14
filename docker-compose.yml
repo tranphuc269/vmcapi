@@ -3,10 +3,8 @@ version: '3.8'
 services:
   app:
     container_name: car
-    image: openjdk:17-jdk-slim
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: tugjabg/vmcapi:0.0.2-SNAPSHOT
+    restart: always
     environment:
         - SQL_URL=jdbc:postgresql://my_postgres:5432/car
     ports:
