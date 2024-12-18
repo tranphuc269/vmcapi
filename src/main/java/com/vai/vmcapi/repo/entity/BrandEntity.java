@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class BrandEntity extends BaseEntityAudit {
     private String name;
     private String logo;
+    private Integer order;
 
     public BrandDTO toDto() {
         return BrandDTO.builder()

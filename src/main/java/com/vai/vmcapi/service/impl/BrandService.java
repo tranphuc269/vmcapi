@@ -30,7 +30,7 @@ public class BrandService {
 
     public List<BrandDTO> getAllBrands() {
         // Fetch all entities
-        List<BrandEntity> allEntities = brandRepository.findAll();
+        List<BrandEntity> allEntities = brandRepository.findAllByOrderByOrder();
 
         // Convert all entities to DTOs and return
         return allEntities.stream()
