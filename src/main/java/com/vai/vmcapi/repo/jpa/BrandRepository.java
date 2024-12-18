@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface BrandRepository extends JpaRepository<BrandEntity, Long> {
-    List<BrandEntity> findAllByOrderByOrder();
+    List<BrandEntity> findAllByOrderByOrderNum();
 }
