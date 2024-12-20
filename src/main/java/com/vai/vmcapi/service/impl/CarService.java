@@ -212,6 +212,7 @@ public class CarService {
                 .images(String.join(",", carDTO.getImages()))
                 .version(carDTO.getVersion())
                 .kmDriven(carDTO.getKmDriven())
+                .drivetrain(carDTO.getDrivetrain())
                 .brand(brandRepository.findById(carDTO.getBrandId()).get())
                 .style(styleRepository.findById(carDTO.getStyleId()).get())
                 .origin(originRepository.findById(carDTO.getOriginId()).get())
