@@ -9,11 +9,9 @@ import com.vai.vmcapi.security.CurrentUser;
 import com.vai.vmcapi.security.UserContext;
 import com.vai.vmcapi.service.impl.CarService;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.Query;
 import java.util.List;
 
 @RestController
@@ -41,9 +39,14 @@ public class CarController {
         return ResponseDTO.success(carService.queryCars(params));
     }
 
+    @GetMapping("/{userId}/users")
+    public ResponseDTO<List<CarDTO>> getCarByUserCreated(@PathVariable Long userId){
+        return ResponseDTO.success(carService.getCarByUserCreated(userId));
+    }
+
     @PutMapping("/{id}")
-    public ResponseDTO<CarDTO> updateCar(@PathVariable Long id, @RequestBody UpSertCarRequest request) {
-        return ResponseDTO.success(carService.updateCar(id, request));
+    public ResponseDTO<CarDTO> updateCar(@CurrentUser UserContext userContext, @PathVariable Long id, @RequestBody UpSertCarRequest request) {
+        return ResponseDTO.success(carService.updateCar(userContext, id, request));
     }
 
     @DeleteMapping("/{id}")

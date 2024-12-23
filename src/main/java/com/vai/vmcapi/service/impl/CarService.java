@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -107,9 +108,12 @@ public class CarService {
                 .build();
     }
 
-    public CarDTO updateCar(Long id, UpSertCarRequest carDTO) {
+    public CarDTO updateCar(UserContext userContext, Long id, UpSertCarRequest carDTO) {
         CarEntity existingEntity = carRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Car not found"));
+        if(!userContext.getId().equals(existingEntity.getId())){
+            throw new BusinessException("Can't update car", HttpStatus.FORBIDDEN);
+        }
         updateEntityFields(existingEntity, carDTO);
         CarEntity savedEntity = carRepository.save(existingEntity);
         return savedEntity.toDto();
@@ -324,5 +328,9 @@ public class CarService {
         }
 
         return new CarBrands(brands);
+    }
+
+    public List<CarDTO> getCarByUserCreated(Long userId) {
+        return carRepository.findByCreatedBy(userId).stream().map(CarEntity::toDto).toList();
     }
 }

@@ -58,6 +58,7 @@ public class WebSecurityConfig {
             "/v3/api-docs/**",
             "/users/auth",
             "/users/register",
+            "/cars/{userId}/users",
             "/test/**",
             "/test",
             "/address/**",
