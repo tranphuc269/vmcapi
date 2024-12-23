@@ -111,7 +111,7 @@ public class CarService {
     public CarDTO updateCar(UserContext userContext, Long id, UpSertCarRequest carDTO) {
         CarEntity existingEntity = carRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Car not found"));
-        if(!userContext.getId().equals(existingEntity.getId())){
+        if(!userContext.getId().equals(existingEntity.getCreatedBy())){
             throw new BusinessException("Can't update car", HttpStatus.FORBIDDEN);
         }
         updateEntityFields(existingEntity, carDTO);
