@@ -3,12 +3,14 @@ version: '3.8'
 services:
   app:
     container_name: car
-    image: tugjabg/vmcapi:0.0.2-SNAPSHOT
+    image: tugjabg/vmcapi:v0.0.1
     restart: always
-    environment:
-        - SQL_URL=jdbc:postgresql://my_postgres:5432/car
+    networks:
+      - "be-network"
+#    environment:
+#        - SQL_URL=jdbc:postgresql://my_postgres:5432/car
     ports:
-      - "8080:8080"
+      - "8081:8081"
   postgres:
     container_name: my_postgres
     image: postgres:15
@@ -16,6 +18,9 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: phuctv142024
       POSTGRES_DB: car
+    restart: always
+    networks:
+      - "be-network"
     ports:
       - "5432:5432"
     volumes:
