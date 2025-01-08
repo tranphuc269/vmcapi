@@ -21,6 +21,7 @@ public class BrandEntity extends BaseEntityAudit {
     private String name;
     private String logo;
     private Integer orderNum;
+    private Boolean isTruck;
 
     public BrandDTO toDto() {
         return BrandDTO.builder()
@@ -29,6 +30,7 @@ public class BrandEntity extends BaseEntityAudit {
                 .updatedAt(this.getUpdatedAt())
                 .name(this.name)
                 .logo(this.logo)
+                .isTruck(this.getIsTruck())
                 .build();
     }
 }

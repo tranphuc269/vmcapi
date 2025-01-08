@@ -198,12 +198,15 @@ public class CarService {
                 Predicate codePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("code")), keyword);
                 predicates.add(criteriaBuilder.or(namePredicate, descriptionPredicate, codePredicate));
             }
+            predicates.add(criteriaBuilder.equal(root.get("isPublish"), 1));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
 
     public void deleteCar(Long id) {
-        carRepository.deleteById(id);
+        CarEntity carEntity = carRepository.findById(id).get();
+        carEntity.setDeleted(true);
+        carRepository.save(carEntity);
     }
 
     private CarEntity convertToEntity(UpSertCarRequest carDTO) {
@@ -233,6 +236,8 @@ public class CarService {
                 .seatCapacity(carDTO.getSeatCapacity())
                 .status(carDTO.getStatus())
                 .transmission(carDTO.getTransmission())
+                .isPublish(carDTO.getIsPublish())
+                .deleted(false)
                 .build();
     }
 
@@ -259,6 +264,7 @@ public class CarService {
         existingEntity.setWardId(carDTO.getWardId());
         existingEntity.setAddress(carDTO.getAddress());
         existingEntity.setPrice(carDTO.getPrice());
+        existingEntity.setIsPublish(carDTO.getIsPublish());
         existingEntity.setSlug(carDTO.getSlug());
     }
 

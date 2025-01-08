@@ -12,4 +12,5 @@ public class BrandDTO {
     private Instant updatedAt;
     private String name;
     private String logo;
+    private Boolean isTruck;
 }

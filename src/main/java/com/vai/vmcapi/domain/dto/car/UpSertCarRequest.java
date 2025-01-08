@@ -40,10 +40,14 @@ public class UpSertCarRequest {
     @EnumValidator(enumClass = EDrivetrain.class, message = "Invalid drivetrain type")
     private String drivetrain;
     private List<String> images;
+    @NotNull
     private String slug;
+
     private String version;
     private Integer kmDriven;
+    @NotNull
     private Long price;
+    @NotNull
     private String logo;
     private Long brandId;
     private Long modelId;
@@ -52,11 +56,10 @@ public class UpSertCarRequest {
     private Long fuelId;
     private Long outsideColorId;
     private Long insideColorId;
-
     private Long cityId;
-
+    @NotNull
+    private Integer isPublish;
     private Long districtId;
-
     private Long wardId;
     private String address;
 }

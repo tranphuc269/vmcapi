@@ -1,33 +1,36 @@
 package com.vai.vmcapi.utils;
 
-import java.text.DecimalFormat;
-
 public class NumberToVietnameseWords {
 
     private static final String[] units = { "", "Một", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín" };
     private static final String[] tens = { "", "", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín" };
 
     public static String convertToVietnameseWords(long number) {
-        if (number == 0) {
-            return "không đồng";
-        }
-        StringBuilder sb = new StringBuilder();
-        if (number < 0) {
-            sb.append("âm ");
-            number = -number;
-        }
-        String[] unitsArray = { "đồng", "nghìn", "triệu", "tỷ" };
-        int unitIndex = 0;
-        while (number > 0) {
-            int group = (int) (number % 1000);
-            if (group != 0) {
-                String groupWords = convertGroupToWords(group);
-                sb.insert(0, groupWords + " " + unitsArray[unitIndex] + " ");
+        try{
+            if (number == 0) {
+                return "không đồng";
             }
-            unitIndex++;
-            number /= 1000;
+            StringBuilder sb = new StringBuilder();
+            if (number < 0) {
+                sb.append("âm ");
+                number = -number;
+            }
+            String[] unitsArray = { "đồng", "nghìn", "triệu", "tỷ" };
+            int unitIndex = 0;
+            while (number > 0) {
+                int group = (int) (number % 1000);
+                if (group != 0) {
+                    String groupWords = convertGroupToWords(group);
+                    sb.insert(0, groupWords + " " + unitsArray[unitIndex] + " ");
+                }
+                unitIndex++;
+                number /= 1000;
+            }
+            return sb.toString().trim();
+        }catch (Exception e){
+            System.out.println("ERROR number :: " + number);
+            return "";
         }
-        return sb.toString().trim();
     }
 
     private static String convertGroupToWords(int number) {

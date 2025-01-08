@@ -48,4 +48,6 @@ public abstract class BaseEntityAudit implements Serializable {
 
     @Column(name = "created_by", insertable = false, updatable = false)
     private Long createdBy;
+
+    private Boolean deleted = Boolean.FALSE;
 }

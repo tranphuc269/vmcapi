@@ -58,6 +58,7 @@ public class CarDTO {
     private AddressDTO ward;
     private String address;
     private String description;
+    private Integer isPublish;
 
     @Builder.Default
     private String userPhoneNum = "0123456789";

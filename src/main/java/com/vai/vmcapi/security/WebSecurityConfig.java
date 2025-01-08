@@ -76,6 +76,7 @@ public class WebSecurityConfig {
             "/models",
             "/models/**",
             "/origins",
+            "/admin/**",
             "/origins/**",
             "styles",
             "/styles/**",

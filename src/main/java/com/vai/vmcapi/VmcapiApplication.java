@@ -16,5 +16,8 @@ public class VmcapiApplication {
     public static void main(String[] args) {
         SpringApplication.run(VmcapiApplication.class, args);
     }
-
+//    @Bean
+//    public void logDatabaseConfig(DatabaseConfigLogger logger) {
+//        logger.logUrl();
+//    }
 }

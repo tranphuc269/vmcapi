@@ -19,6 +19,8 @@ public class UserEntity extends BaseEntity {
 
     private String fullname;
     private String role;
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean lock;
 
     @ManyToOne
     @JoinColumn(name = "ward_id")

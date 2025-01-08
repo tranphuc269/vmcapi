@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Table(name = "cars")
+@Where(clause = "deleted=false")
 @SuperBuilder
 public class CarEntity extends BaseEntityAudit {
     private String name;
@@ -100,6 +102,15 @@ public class CarEntity extends BaseEntityAudit {
     @Column(name = "ward_id", insertable = false, updatable = false)
     private Long wardId;
     private String address;
+    private Integer isPublish;
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean lock;
+
+    public Integer getIsPublish(){
+        return isPublish == null ? 1 : isPublish;
+    }
+
+
 
     public CarDTO toDto() {
         return CarDTO.builder()
@@ -131,6 +142,7 @@ public class CarEntity extends BaseEntityAudit {
                 .address(this.getAddress())
                 .username(this.getCreatedBy() == null ? null : this.getUserCreated().getFullname())
                 .userPhoneNum(this.getCreatedBy() == null ? null : this.getUserCreated().getPhoneNum())
+                .isPublish(this.getIsPublish())
                 .build();
     }
 }
