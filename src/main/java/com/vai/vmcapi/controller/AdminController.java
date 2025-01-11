@@ -3,6 +3,7 @@ package com.vai.vmcapi.controller;
 
 import com.vai.vmcapi.domain.dto.PageableResponse;
 import com.vai.vmcapi.domain.dto.ResponseDTO;
+import com.vai.vmcapi.domain.dto.admin.AdminReportDTO;
 import com.vai.vmcapi.domain.dto.admin.AdminSearchParams;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
 import com.vai.vmcapi.domain.dto.user.UserVO;
@@ -59,5 +60,10 @@ public class AdminController {
     @PutMapping("/users/{id}/unlock-car")
     public ResponseDTO<Boolean> unLockCar(@PathVariable Long id) {
         return ResponseDTO.success(adminService.unLockCar(id));
+    }
+
+    @GetMapping("/reports/in-day")
+    public ResponseDTO<AdminReportDTO> getReportInDay() {
+        return ResponseDTO.success(adminService.getReportInDay());
     }
 }

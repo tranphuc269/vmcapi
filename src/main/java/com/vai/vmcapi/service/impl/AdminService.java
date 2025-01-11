@@ -1,6 +1,7 @@
 package com.vai.vmcapi.service.impl;
 
 import com.vai.vmcapi.domain.dto.PageableResponse;
+import com.vai.vmcapi.domain.dto.admin.AdminReportDTO;
 import com.vai.vmcapi.domain.dto.admin.AdminSearchParams;
 import com.vai.vmcapi.domain.dto.car.CarDTO;
 import com.vai.vmcapi.domain.dto.user.UserVO;
@@ -157,5 +158,13 @@ public class AdminService {
             carRepository.save(carEntity);
         }
         return true;
+    }
+
+    public AdminReportDTO getReportInDay() {
+        return AdminReportDTO
+                .builder()
+                .totalUserInDay(5)
+                .totalCarInDay(12)
+                .build();
     }
 }

@@ -38,6 +38,7 @@ public class UserEntity extends BaseEntity {
                 .fullname(this.getFullname())
                 .ward(this.getWard() == null ? null : this.getWard().toDto())
                 .role(this.getRole())
+                .lock(this.getLock())
                 .build();
     }
 }

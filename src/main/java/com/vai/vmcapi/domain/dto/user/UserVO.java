@@ -17,6 +17,7 @@ public class UserVO {
     private String phoneNum;
     private String fullname;
     private String role;
+    private Boolean lock;
     private AddressDTO ward;
 
 }
